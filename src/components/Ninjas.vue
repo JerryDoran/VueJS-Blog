@@ -2,11 +2,7 @@
   <!-- Need to have everything written inside one root element -->
   <div id="ninjas">
     <ul>
-      <li
-        v-for="ninja in ninjas"
-        :key="ninja"
-        v-on:click="ninja.show = !ninja.show"
-      >
+      <li v-for="ninja in ninjas" :key="ninja" v-on:click="ninja.show = !ninja.show">
         <h2>{{ ninja.name }}</h2>
         <h3 v-show="ninja.show">{{ ninja.specialty }}</h3>
       </li>
@@ -30,6 +26,26 @@ export default {
     deleteNinja: function() {
       this.ninjas.pop();
     }
+  },
+  // Lifecycle Hooks
+  beforeCreate() {
+    alert('before create');
+  },
+  created() {
+    // Good place to put code to fetch data
+    alert('created');
+  },
+  beforeMount() {
+    alert('before mount');
+  },
+  mounted() {
+    alert('mounted');
+  },
+  beforeUpdate() {
+    alert('before update');
+  },
+  updated() {
+    alert('updated');
   }
 };
 </script>
