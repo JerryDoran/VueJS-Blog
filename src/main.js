@@ -1,12 +1,36 @@
 import Vue from 'vue';
 import App from './App.vue';
-// import Ninjas from './Ninjas.vue';
+import VueResource from 'vue-resource';
 
-// Registers the component globally
-// Vue.component('ninjas', Ninjas);
+// Used for HTTP requests to the server
+Vue.use(VueResource);
 
-// Create an event bus
-export const bus = new Vue();
+// Custom directives - global
+Vue.directive('rainbow', {
+  // Lifecycle hook
+  bind(el, binding, vnode) {
+    el.style.color =
+      '#' +
+      Math.random()
+        .toString()
+        .slice(2, 8);
+  }
+});
+
+Vue.directive('theme', {
+  bind(el, binding, vnode) {
+    if (binding.value === 'wide') {
+      el.style.maxWidth = '1200px';
+    } else if (binding.value === 'narrow') {
+      el.style.maxWidth = '500px';
+    }
+
+    if (binding.arg === 'column') {
+      el.style.background = '#ddd';
+      el.style.padding = '20px';
+    }
+  }
+});
 
 new Vue({
   el: '#app',
