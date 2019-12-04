@@ -1,11 +1,19 @@
 import Vue from 'vue';
 import App from './App.vue';
 import VueResource from 'vue-resource';
+import VueRouter from 'vue-router';
+import Routes from './routes';
 
 // Used for HTTP requests to the server
 Vue.use(VueResource);
+Vue.use(VueRouter);
 
-// Filters
+const router = new VueRouter({
+  routes: Routes,
+  mode: 'history'
+});
+
+// Filters - Registered globally
 Vue.filter('to-uppercase', value => {
   return value.toUpperCase();
 });
@@ -44,5 +52,6 @@ Vue.directive('theme', {
 
 new Vue({
   el: '#app',
-  render: h => h(App)
+  render: h => h(App),
+  router: router
 });

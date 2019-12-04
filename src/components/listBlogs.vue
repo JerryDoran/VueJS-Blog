@@ -2,25 +2,16 @@
   <!-- Need to have everything written inside one root element -->
   <!-- <div v-theme:column="'wide'" id="show-blogs"> -->
   <div v-theme="'wide'" id="show-blogs">
-    <h1>All Blog Articles</h1>
-    <input
-      id="search-blog"
-      type="text"
-      v-model="search"
-      placeholder="Search blogs"
-    />
+    <h1>List of Blog Titles</h1>
+    <input id="search-blog" type="text" v-model="search" placeholder="Search blogs" />
     <div v-for="blog in filteredBlogs" :key="blog" class="single-blog">
-      <router-link v-bind:to="'/blog/' + blog.id"
-        ><h2 v-rainbow>{{ blog.title | toUppercase }}</h2></router-link
-      >
-      <article>{{ blog.body | snippet }}</article>
+      <h2 v-rainbow>{{ blog.title | toUppercase }}</h2>
     </div>
   </div>
 </template>
 
 <script>
 import searchMixin from '../mixins/searchMixin';
-
 export default {
   data() {
     return {
@@ -38,6 +29,7 @@ export default {
     });
   },
   computed: {},
+
   filters: {
     toUppercase(value) {
       return value.toUpperCase();
