@@ -5,6 +5,16 @@ import VueResource from 'vue-resource';
 // Used for HTTP requests to the server
 Vue.use(VueResource);
 
+// Filters
+Vue.filter('to-uppercase', value => {
+  return value.toUpperCase();
+});
+
+Vue.filter('snippet', value => {
+  // Use slice method on the string value to return only 100 characters starting at position 0
+  return value.slice(0, 100) + '...';
+});
+
 // Custom directives - global
 Vue.directive('rainbow', {
   // Lifecycle hook

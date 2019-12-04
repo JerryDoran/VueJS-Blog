@@ -1,10 +1,12 @@
 <template>
   <!-- Need to have everything written inside one root element -->
-  <div v-theme:column="'narrow'" id="show-blogs">
+  <!-- <div v-theme:column="'wide'" id="show-blogs"> -->
+  <div v-theme="'wide'" id="show-blogs">
     <h1>All Blog Articles</h1>
-    <div v-for="blog in blogs" :key="blog" class="single-blog">
-      <h2 v-rainbow>{{ blog.title }}</h2>
-      <article>{{ blog.body }}</article>
+    <input id="search-blog" type="text" v-model="search" placeholder="Search blogs" />
+    <div v-for="blog in filteredBlogs" :key="blog" class="single-blog">
+      <h2 v-rainbow>{{ blog.title | to-uppercase }}</h2>
+      <article>{{ blog.body | snippet}}</article>
     </div>
   </div>
 </template>
@@ -13,7 +15,8 @@
 export default {
   data() {
     return {
-      blogs: []
+      blogs: [],
+      search: ''
     };
   },
   methods: {},
@@ -24,6 +27,13 @@ export default {
       // in the blogs array.
       this.blogs = data.body.slice(0, 10);
     });
+  },
+  computed: {
+    filteredBlogs: function() {
+      return this.blogs.filter(blog => {
+        return blog.title.match(this.search);
+      });
+    }
   }
 };
 </script>
@@ -40,5 +50,11 @@ export default {
   margin: 20px 0;
   box-sizing: border-box;
   background: #eee;
+}
+
+#search-blog {
+  width: 50%;
+  padding: 5px 5px;
+  font-size: 1rem;
 }
 </style>
