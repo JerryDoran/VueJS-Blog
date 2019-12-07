@@ -3,17 +3,12 @@
   <!-- <div v-theme:column="'wide'" id="show-blogs"> -->
   <div v-theme="'wide'" id="show-blogs">
     <h1>All Blog Articles</h1>
-    <input
-      id="search-blog"
-      type="text"
-      v-model="search"
-      placeholder="Search blogs"
-    />
+    <input id="search-blog" type="text" v-model="search" placeholder="Search blogs" />
     <div v-for="blog in filteredBlogs" :key="blog" class="single-blog">
-      <router-link v-bind:to="'/blog/' + blog.id"
-        ><h2 v-rainbow>{{ blog.title | toUppercase }}</h2></router-link
-      >
-      <article>{{ blog.body | snippet }}</article>
+      <router-link v-bind:to="'/blog/' + blog.id">
+        <h2 v-rainbow>{{ blog.title | toUppercase }}</h2>
+      </router-link>
+      <article>{{ blog.content | snippet }}</article>
     </div>
   </div>
 </template>
@@ -31,11 +26,22 @@ export default {
   methods: {},
   // Life cycle hook
   created() {
-    this.$http.get('http://jsonplaceholder.typicode.com/posts').then(data => {
-      // Get first 10 elements from the body array that is return from the URL and store them
-      // in the blogs array.
-      this.blogs = data.body.slice(0, 10);
-    });
+    this.$http
+      .get('https://vue-blog-85f59.firebaseio.com/posts.json')
+      .then(data => {
+        // Get first 10 elements from the body array that is return from the URL and store them
+        // in the blogs array.
+        // this.blogs = data.body.slice(0, 10);
+        return data.json();
+      })
+      .then(data => {
+        const blogsArray = [];
+        for (let key in data) {
+          data[key].id = key;
+          blogsArray.push(data[key]);
+        }
+        this.blogs = blogsArray;
+      });
   },
   computed: {},
   filters: {

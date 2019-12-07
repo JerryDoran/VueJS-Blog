@@ -12,14 +12,14 @@
       <h3>Thanks for submitting your post</h3>
     </div>
     <div id="checkboxes">
-      <label>Ninjas</label>
-      <input type="checkbox" value="ninjas" v-model="blog.categories" />
-      <label>Wizards</label>
-      <input type="checkbox" value="wizards" v-model="blog.categories" />
-      <label>Mario</label>
-      <input type="checkbox" value="mario" v-model="blog.categories" />
-      <label>Luigi</label>
-      <input type="checkbox" value="luigi" v-model="blog.categories" />
+      <label>MERN</label>
+      <input type="checkbox" value="MERN" v-model="blog.categories" />
+      <label>MEAN</label>
+      <input type="checkbox" value="MEAN" v-model="blog.categories" />
+      <label>MEVN</label>
+      <input type="checkbox" value="MEVN" v-model="blog.categories" />
+      <label>JAM</label>
+      <input type="checkbox" value="JAM" v-model="blog.categories" />
     </div>
     <label>Author</label>
     <select class="select-author" v-model="blog.author">
@@ -35,9 +35,7 @@
       <p>{{ blog.content }}</p>
       <p>Blog Categories</p>
       <ul>
-        <li v-for="category in blog.categories" :key="category">
-          {{ category }}
-        </li>
+        <li v-for="category in blog.categories" :key="category">{{ category }}</li>
       </ul>
       <p>Author: {{ blog.author }}</p>
     </div>
@@ -54,18 +52,14 @@ export default {
         categories: [],
         author: ''
       },
-      authors: ['The Net Ninja', 'Angular Avenger', 'Vue Vindicator'],
+      authors: ['React Racer', 'Angular Avenger', 'Vue Vindicator'],
       submitted: false
     };
   },
   methods: {
     postBlog: function() {
       this.$http
-        .post('http://jsonplaceholder.typicode.com/posts', {
-          title: this.blog.title,
-          body: this.blog.content,
-          userId: 1
-        })
+        .post('https://vue-blog-85f59.firebaseio.com/posts.json', this.blog)
         .then(data => {
           console.log(data);
           this.submitted = true;
